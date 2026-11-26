@@ -1101,6 +1101,7 @@ function plotFunc(evalFn, color, dashed, width, w, h, sx, sy) {
     const y = evalFn(x);
     if (!Number.isFinite(y)) { pen = false; continue; }
     const [, py] = toScr(x, y, w, h, sx, sy);
+    if (!Number.isFinite(py) || py < -h * 2 || py > h * 3) { pen = false; continue; }
     if (pen && Math.abs(py - prevY) > h * 0.82) pen = false;
     if (!pen) { ctx.moveTo(px, py); pen = true; } else ctx.lineTo(px, py);
     prevY = py;
@@ -1154,9 +1155,14 @@ function renderModule1Canvas(w, h, sx, sy, isTrig) {
     if (!Number.isFinite(y0)) { pen = false; continue; }
     const [mx, my] = mapM1Point(x0, y0, t);
     const [px, py] = toScr(mx, my, w, h, sx, sy);
+    if (!Number.isFinite(py) || py < -h * 2 || py > h * 3 || px < -w || px > w * 2) {
+      pen = false;
+      continue;
+    }
     if (pen && Math.abs(py - prevPy) > h * 0.82) pen = false;
     if (!pen) { ctx.moveTo(px, py); pen = true; } else ctx.lineTo(px, py);
     prevPy = py;
+
   }
   ctx.stroke(); ctx.restore();
 
