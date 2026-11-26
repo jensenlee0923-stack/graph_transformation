@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>S5 Mathematics — 3.4 Transformations of Functions</title>
+
+<!-- Editorial Serif & Technical Typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- KaTeX for Authentic Computer Modern LaTeX Rendering -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+<style>
+  :root {
+    --bg-ivory: #f6f5f0;
+    --bg-panel: rgba(255, 255, 255, 0.88);
+    --bg-subtle: #efede6;
+    --ink: #0f172a;
+    --ink-muted: #525b6c;
+    --navy: #14284b;
+    --crimson: #8b1e3f;
+    --gold: #9a7b3e;
+    --emerald: #14532d;
+    --slate-line: rgba(15, 23, 42, 0.13);
+    --slate-strong: rgba(15, 23, 42, 0.28);
+    --shadow-elevated: 0 14px 36px rgba(15, 23, 42, 0.06);
+    --radius: 2px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background-color: var(--bg-ivory);
+    background-image:
+      linear-gradient(to right, rgba(20, 40, 75, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(20, 40, 75, 0.03) 1px, transparent 1px);
+    background-size: 36px 36px;
+    min-height: 100vh;
+    line-height: 1.55;
+  }
+
+  h1, h2, h3, .serif-title {
+    font-family: "Cormorant Garamond", "Baskerville", "Georgia", "Times New Roman", serif;
+    letter-spacing: 0.01em;
+  }
+
+  .container { max-width: 1380px; margin: 0 auto; padding: 24px 28px 56px; }
+
+  .surface {
+    background: var(--bg-panel);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid var(--slate-line);
+    box-shadow: var(--shadow-elevated);
+    border-radius: var(--radius);
+  }
+
+  /* Architectural Header */
+  header {
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+    gap: 20px; padding: 20px 26px; margin-bottom: 22px;
+    border-top: 3px solid var(--navy);
+  }
+  .brand-eyebrow {
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.16em; color: var(--gold); margin-bottom: 4px;
+  }
+  .brand h1 { font-size: 1.85rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
+  .brand p { font-size: 0.82rem; color: var(--ink-muted); margin-top: 4px; }
+
+  .nav-tabs {
+    display: flex; flex-wrap: wrap; border: 1px solid var(--slate-strong);
+    background: rgba(255, 255, 255, 0.6);
+  }
+  .nav-btn {
+    border: none; border-right: 1px solid var(--slate-line);
+    background: transparent; color: var(--ink-muted);
+    font-family: "IBM Plex Sans", sans-serif; font-weight: 500; font-size: 0.8rem;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    padding: 11px 18px; cursor: pointer; transition: all 0.2s ease;
+  }
+  .nav-btn:last-child { border-right: none; }
+  .nav-btn:hover { color: var(--navy); background: rgba(20, 40, 75, 0.04); }
+  .nav-btn.active {
+    background: var(--navy); color: #ffffff; font-weight: 600;
+  }
+
+  /* Workspace Grid */
+  .workspace {
+    display: grid; grid-template-columns: 420px 1fr; gap: 22px; align-items: start;
+  }
+  @media (max-width: 1024px) { .workspace { grid-template-columns: 1fr; } }
+
+  .panel { padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+  .sub-panel { display: flex; flex-direction: column; gap: 15px; }
+
+  .section-label {
+    font-size: 0.68rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--gold);
+    border-bottom: 1px solid var(--slate-line);
+    padding-bottom: 5px; margin-bottom: 8px; display: block;
+  }
+
+  /* Sharp LaTeX Function Matrix & Buttons */
+  .fn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .fn-btn, .chip, .btn {
+    border-radius: var(--radius);
+    border: 1px solid var(--slate-strong);
+    background: #ffffff;
+    color: var(--ink);
+    padding: 8px 10px;
+    font-size: 0.82rem; font-weight: 500;
+    cursor: pointer; transition: all 0.16s ease;
+    text-align: center;
+  }
+  .fn-btn { padding: 8px 6px; font-size: 0.84rem; }
+  .fn-btn:hover, .chip:hover, .btn:hover {
+    border-color: var(--navy); background: rgba(20, 40, 75, 0.03);
+  }
+  .fn-btn.active, .chip.active {
+    background: var(--navy); color: #ffffff; border-color: var(--navy);
+  }
+  .chip-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { flex: 1 1 auto; font-size: 0.77rem; letter-spacing: 0.02em; }
+
+  .btn {
+    width: 100%; text-transform: uppercase; letter-spacing: 0.08em;
+    font-size: 0.75rem; font-weight: 600; padding: 10px 14px;
+  }
+  .btn-primary { background: var(--navy); color: #ffffff; border-color: var(--navy); }
+  .btn-primary:hover { background: #1e3a6d; color: #ffffff; }
+  .btn-crimson { background: var(--crimson); color: #ffffff; border-color: var(--crimson); }
+  .btn-crimson:hover { background: #a3244b; color: #ffffff; }
+
+  /* Precision Sliders */
+  .slider-row { display: flex; flex-direction: column; gap: 6px; }
+  .slider-head { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+  .val-readout {
+    font-variant-numeric: tabular-nums; font-weight: 600; color: var(--navy);
+    border: 1px solid var(--slate-line); background: var(--bg-subtle);
+    padding: 1px 8px; font-size: 0.8rem;
+  }
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 2px;
+    background: var(--slate-strong); outline: none; margin: 6px 0;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 13px; height: 13px;
+    background: var(--navy); border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1px var(--navy); cursor: pointer;
+    border-radius: 0; /* Sharp square architectural thumb */
+  }
+
+  /* Editorial Callout Boxes (Matching Overleaf tcolorbox) */
+  .callout {
+    padding: 12px 14px; font-size: 0.83rem; line-height: 1.55;
+    border: 1px solid var(--slate-line); background: #ffffff;
+  }
+  .callout-title {
+    font-family: "Cormorant Garamond", serif; font-size: 1rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; display: block;
+  }
+  .key-box { border-left: 3px solid var(--emerald); background: rgba(20, 83, 45, 0.03); }
+  .key-box .callout-title { color: var(--emerald); }
+  .err-box { border-left: 3px solid var(--crimson); background: rgba(139, 30, 63, 0.03); }
+  .err-box .callout-title { color: var(--crimson); }
+
+  /* Pathway Cards */
+  .pathway-card {
+    padding: 12px 14px; background: #ffffff;
+    border: 1px solid var(--slate-line); border-left: 3px solid var(--navy);
+    font-size: 0.82rem; transition: all 0.22s ease;
+  }
+  .pathway-card.alt { border-left-color: var(--crimson); }
+  .pathway-card.highlight { box-shadow: 0 6px 20px rgba(20, 40, 75, 0.12); border-color: var(--gold); }
+  .pathway-head {
+    font-family: "Cormorant Garamond", serif; font-size: 1.02rem; font-weight: 700;
+    color: var(--navy); margin-bottom: 4px;
+  }
+  .pathway-card.alt .pathway-head { color: var(--crimson); }
+  .step-item {
+    padding: 5px 8px; margin-top: 4px; border-left: 2px solid transparent;
+    font-size: 0.81rem; transition: all 0.2s;
+  }
+  .step-item.active-step {
+    background: rgba(154, 123, 62, 0.12); border-left-color: var(--gold); font-weight: 600;
+  }
+
+  /* Canvas Stage & LaTeX HUD */
+  .canvas-stage { position: relative; padding: 14px; }
+  canvas {
+    width: 100%; height: 540px; display: block;
+    background: #ffffff; border: 1px solid var(--slate-line);
+    touch-action: none; cursor: crosshair;
+  }
+  .hud-top {
+    position: absolute; top: 26px; left: 26px; right: 26px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    pointer-events: none; gap: 12px; flex-wrap: wrap;
+  }
+  .eq-stack { display: flex; flex-direction: column; gap: 7px; }
+  .eq-card {
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid var(--slate-line); border-left: 3px solid var(--navy);
+    padding: 7px 13px; font-size: 0.9rem;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  }
+  .eq-card.crimson { border-left-color: var(--crimson); }
+  .eq-card.gold { border-left-color: var(--gold); font-size: 0.8rem; color: var(--ink-muted); }
+
+  .cam-controls { display: flex; border: 1px solid var(--slate-strong); background: #ffffff; pointer-events: auto; }
+  .cam-btn {
+    width: 34px; height: 34px; border: none; border-right: 1px solid var(--slate-line);
+    background: #ffffff; color: var(--ink); font-size: 0.95rem; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .cam-btn:last-child { border-right: none; }
+  .cam-btn:hover { background: var(--bg-subtle); }
+
+  .hud-bottom {
+    position: absolute; bottom: 26px; left: 26px; right: 26px;
+    display: flex; justify-content: space-between; pointer-events: none;
+    font-size: 0.75rem; color: var(--ink-muted);
+  }
+  .hud-tag {
+    background: rgba(255, 255, 255, 0.92); border: 1px solid var(--slate-line);
+    padding: 4px 10px; font-variant-numeric: tabular-nums; letter-spacing: 0.03em;
+  }
+
+  /* Lower Sections: Guided Examples & MC Review */
+  .lower-section { margin-top: 24px; padding: 24px 26px; border-top: 2px solid var(--navy); }
+  .section-bar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--slate-line); padding-bottom: 12px; margin-bottom: 18px;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .section-bar h2 { font-size: 1.45rem; color: var(--navy); }
+
+  .examples-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 860px) { .examples-grid { grid-template-columns: 1fr; } }
+  .ex-card {
+    background: #ffffff; border: 1px solid var(--slate-line);
+    padding: 18px; display: flex; flex-direction: column; gap: 12px; font-size: 0.86rem;
+  }
+  .ex-card h3 { font-size: 1.15rem; color: var(--navy); border-bottom: 1px solid var(--slate-line); padding-bottom: 6px; }
+  .sol-panel {
+    display: none; padding: 12px 14px; background: var(--bg-ivory);
+    border-left: 2px solid var(--gold); font-size: 0.84rem; overflow-x: auto;
+  }
+  .sol-panel.open { display: block; }
+
+  .quiz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 16px; }
+  .q-card {
+    background: #ffffff; border: 1px solid var(--slate-line);
+    padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .q-num { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); }
+  .q-stem { font-size: 0.88rem; line-height: 1.6; color: var(--ink); }
+  .opt-list { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+  .opt-btn {
+    text-align: left; padding: 9px 12px; border: 1px solid var(--slate-line);
+    background: #fafafa; font-size: 0.84rem; cursor: pointer;
+    display: flex; gap: 10px; align-items: baseline; transition: all 0.15s;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--navy); background: #ffffff; }
+  .opt-letter { font-family: "Cormorant Garamond", serif; font-weight: 700; font-size: 0.95rem; color: var(--navy); min-width: 18px; }
+  .opt-btn.correct { background: rgba(20, 83, 45, 0.08); border-color: var(--emerald); color: var(--emerald); font-weight: 600; }
+  .opt-btn.wrong { background: rgba(139, 30, 63, 0.08); border-color: var(--crimson); color: var(--crimson); }
+  .q-exp {
+    display: none; padding: 10px 12px; background: var(--bg-ivory);
+    border-left: 2px solid var(--navy); font-size: 0.81rem; color: var(--ink); line-height: 1.55;
+  }
+  .q-exp.show { display: block; }
+
+  .check-label {
+    display: flex; align-items: center; gap: 8px; font-size: 0.8rem;
+    color: var(--ink-muted); cursor: pointer; user-select: none;
+  }
+  .check-label input { accent-color: var(--navy); width: 14px; height: 14px; }
+  .hidden { display: none !important; }
+  .katex { font-size: 1.03em; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="surface">
+    <div class="brand">
+      <div class="brand-eyebrow">S5 Mathematics (Compulsory Part) &bull; Chapter 3.4</div>
+      <h1>Transformations of Functions</h1>
+      <p>Interactive Analytical Geometry &amp; Inquiry Studio &mdash; Degree Measure (<span class="tex-inline" data-tex="^\circ"></span>) Exclusively</p>
+    </div>
+    <nav class="nav-tabs">
+      <button class="nav-btn active" onclick="switchTab(1)">I. Inquiries 1&ndash;5</button>
+      <button class="nav-btn" onclick="switchTab(2)">II. Combined Pathways</button>
+      <button class="nav-btn" onclick="switchTab(3)">III. Triangle Centres</button>
+    </nav>
+  </header>
+
+  <div class="workspace">
+    <!-- CONTROL ARCHITECTURE -->
+    <aside class="surface panel">
+      <!-- Base Function LaTeX Selector -->
+      <div id="baseFnSection">
+        <span class="section-label">Base Function <span class="tex-inline" data-tex="y = f(x)"></span></span>
+        <div class="fn-grid" id="fnGrid"></div>
+      </div>
+
+      <!-- MODULE 1: INQUIRIES 1-5 -->
+      <div id="ctrlMod1" class="sub-panel">
+        <div>
+          <span class="section-label">Inquiry Case Selection</span>
+          <div class="chip-grid" id="inqChips">
+            <button class="chip active" onclick="setInquiry(1)">1. Vertical Shift</button>
+            <button class="chip" onclick="setInquiry(2)">2. Horizontal Shift</button>
+            <button class="chip" onclick="setInquiry(3)">3. Axis Reflection</button>
+            <button class="chip" onclick="setInquiry(4)">4. Vertical Scale</button>
+            <button class="chip" onclick="setInquiry(5)">5. Horizontal Scale</button>
+          </div>
+        </div>
+
+        <div id="inqParamArea"></div>
+
+        <div class="slider-row">
+          <div class="slider-head">
+            <span>Transformation Interpolation</span>
+            <span class="val-readout" id="morphLbl">100%</span>
+          </div>
+          <input type="range" id="morphSlider" min="0" max="1" step="0.01" value="1" oninput="onMorphInput(this.value)">
+          <button class="btn btn-primary" onclick="playMorph()">Execute Morphing Sequence</button>
+          <label class="check-label" style="margin-top:4px;">
+            <input type="checkbox" id="vecToggle" checked onchange="draw()"> Display Point-to-Point Displacement Vectors
+          </label>
+        </div>
+
+        <div class="callout key-box" id="m1Key"></div>
+        <div class="callout err-box" id="m1Err"></div>
+      </div>
+
+      <!-- MODULE 2: COMBINED TRANSFORMATIONS -->
+      <div id="ctrlMod2" class="sub-panel hidden">
+        <div>
+          <span class="section-label">Canonical Equivalence Presets</span>
+          <div class="chip-grid" id="m2Presets"></div>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-head"><span id="lblM2a"></span><span class="val-readout" id="m2aVal">1</span></div>
+          <input type="range" id="m2a" min="-3" max="3" step="0.5" value="1" oninput="updateM2()">
+        </div>
+        <div class="slider-row">
+          <div class="slider-head"><span id="lblM2b"></span><span class="val-readout" id="m2bVal">-2</span></div>
+          <input type="range" id="m2b" min="-3" max="4" step="0.5" value="-2" oninput="updateM2()">
+        </div>
+        <div class="slider-row">
+          <div class="slider-head"><span id="lblM2c"></span><span class="val-readout" id="m2cVal">+4</span></div>
+          <input type="range" id="m2c" min="-6" max="6" step="1" value="4" oninput="updateM2()">
+        </div>
+        <div class="slider-row">
+          <div class="slider-head"><span id="lblM2d"></span><span class="val-readout" id="m2dVal">0</span></div>
+          <input type="range" id="m2d" min="-5" max="5" step="1" value="0" oninput="updateM2()">
+        </div>
+
+        <label class="check-label">
+          <input type="checkbox" id="ghostToggle" checked onchange="draw()"> Render Intermediate Stage Curve
+        </label>
+
+        <div class="pathway-card" id="cardPathA"></div>
+        <div class="pathway-card alt" id="cardPathB"></div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <button class="btn btn-primary" onclick="playPathway('A')">Animate Method A</button>
+          <button class="btn btn-crimson" onclick="playPathway('B')">Animate Method B</button>
+        </div>
+      </div>
+
+      <!-- MODULE 3: TRIANGLE CENTRES -->
+      <div id="ctrlMod3" class="sub-panel hidden">
+        <div>
+          <span class="section-label">Parabola Family &amp; Vertex Mapping</span>
+          <div style="display:flex; flex-direction:column; gap:6px;" id="m3ScenButtons"></div>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-head"><span id="lblM3k"></span><span class="val-readout" id="m3kVal">1.20</span></div>
+          <input type="range" id="m3k" min="0.4" max="2.6" step="0.05" value="1.2" oninput="onM3Slider()">
+        </div>
+        <div class="slider-row">
+          <div class="slider-head"><span id="lblM3r"></span><span class="val-readout" id="m3rVal">0.0</span></div>
+          <input type="range" id="m3r" min="-4" max="4" step="0.5" value="0" oninput="onM3Slider()">
+        </div>
+
+        <div>
+          <span class="section-label"> Classical Triangle Centre</span>
+          <div class="chip-grid" id="centreChips">
+            <button class="chip active" onclick="setCentre('H')">Orthocentre H</button>
+            <button class="chip" onclick="setCentre('C')">Circumcentre C</button>
+            <button class="chip" onclick="setCentre('G')">Centroid G</button>
+            <button class="chip" onclick="setCentre('I')">Incentre I</button>
+            <button class="chip" onclick="setCentre('ALL')">Euler Line</button>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr auto; gap:8px;">
+          <button class="btn btn-primary" id="sweepBtn" onclick="toggleSweep()">Sweep Parameter k</button>
+          <button class="btn" style="width:auto;" onclick="clearLocus()">Hide Locus</button>
+        </div>
+        <label class="check-label">
+          <input type="checkbox" id="locusToggle" checked onchange="draw()"> Trace Parametric Locus Curve as k Varies
+        </label>
+
+        <div class="callout key-box" id="m3Readout"></div>
+      </div>
+    </aside>
+
+    <!-- COORDINATE PLANE STAGE -->
+    <main class="surface canvas-stage">
+      <div class="hud-top">
+        <div class="eq-stack" id="hudBadges"></div>
+        <div class="cam-controls">
+          <button class="cam-btn" title="Zoom In" onclick="zoomBy(1.25)">+</button>
+          <button class="cam-btn" title="Zoom Out" onclick="zoomBy(0.8)">&minus;</button>
+          <button class="cam-btn" title="Reset Plane" onclick="resetCam()">&#8634;</button>
+        </div>
+      </div>
+      <canvas id="graphCanvas"></canvas>
+      <div class="hud-bottom">
+        <div class="hud-tag" id="cursorPill">Coordinates: (0.00, 0.00)</div>
+        <div class="hud-tag">Drag Plane to Pan &bull; Scroll or Double-Click to Reset</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- GUIDED EXAMPLES (MODULE 3) -->
+  <section id="m3Examples" class="surface lower-section hidden">
+    <div class="section-bar">
+      <h2>Guided Analytical Examples: Triangle Centres under Transformation</h2>
+      <span style="font-size:0.8rem; color:var(--ink-muted);">Step-by-step aligned derivations</span>
+    </div>
+    <div class="examples-grid">
+      <div class="ex-card">
+        <h3>Example 1: Orthocentre Invariance on the Vertical Axis</h3>
+        <div id="ex1Prompt"></div>
+        <div style="display:flex; gap:8px; margin-top:auto;">
+          <button class="btn btn-primary" onclick="loadGuidedEx(1)">Plot Configuration</button>
+          <button class="btn" onclick="toggleSol('sol1')">View Formal Derivation</button>
+        </div>
+        <div class="sol-panel" id="sol1"></div>
+      </div>
+
+      <div class="ex-card">
+        <h3>Example 2: Orthogonal Vertices &amp; Circumcentre Coordinates</h3>
+        <div id="ex2Prompt"></div>
+        <div style="display:flex; gap:8px; margin-top:auto;">
+          <button class="btn btn-primary" onclick="loadGuidedEx(2)">Plot Configuration</button>
+          <button class="btn" onclick="toggleSol('sol2')">View Formal Derivation</button>
+        </div>
+        <div class="sol-panel" id="sol2"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MULTIPLE CHOICE ASSESSMENT -->
+  <section class="surface lower-section">
+    <div class="section-bar">
+      <h2 id="quizHeading">Consolidation Assessment</h2>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span class="val-readout" id="scoreBadge" style="padding:5px 12px; font-size:0.82rem;">Score: 0 / 5</span>
+        <button class="btn" style="width:auto; padding:6px 14px;" onclick="resetQuiz()">Reset Responses</button>
+      </div>
+    </div>
+    <div class="quiz-grid" id="quizContainer"></div>
+  </section>
+</div>
+
+<script>
+/* ==================== LATEX RENDERING ENGINE ==================== */
+function tex(latex, displayMode = false) {
+  if (window.katex) {
+    try {
+      return katex.renderToString(latex, { throwOnError: false, displayMode });
+    } catch (e) {}
+  }
+  return `<span style="font-family:'Times New Roman',serif;font-style:italic;">${latex}</span>`;
+}
+
+/* ==================== CORE STATE & FUNCTION CATALOGUE ==================== */
+const state = {
+  tab: 1, fn: 'q1',
+  inq: 1, m1k: 2, m1h: -2, m1Ref: 'x', m1vy: 2, m1hx: 2, morph: 1,
+  a: 1, b: -2, c: 4, d: 0, pathAnim: null, pathStage: 2, pathT: 1,
+  scen: 1, k: 1.2, xr: 0, centre: 'H', sweeping: false, sweepDir: 1, locus: [],
+  cx: 0, cy: 0, scale: 38,
+  quizAns: { 1: {}, 2: {}, 3: {} }
+};
+
+const FNS = {
+  q1:  { tex: 'x^2 - 4', btnTex: 'f(x) = x^2 - 4', trig: false, anchor: [0, -4], f: x => x*x - 4 },
+  q2:  { tex: '(x - 1)^2 - 4', btnTex: 'f(x) = (x - 1)^2 - 4', trig: false, anchor: [1, -4], f: x => (x-1)*(x-1) - 4 },
+  q3:  { tex: '12 - 3x^2', btnTex: 'f(x) = 12 - 3x^2', trig: false, anchor: [0, 12], f: x => 12 - 3*x*x },
+  exp: { tex: '2^x', btnTex: 'f(x) = 2^x', trig: false, anchor: [0, 1], f: x => Math.pow(2, x), asymH: 0 },
+  log: { tex: '\\log_2 x', btnTex: 'f(x) = \\log_2 x', trig: false, anchor: [1, 0], f: x => x > 0 ? Math.log2(x) : NaN, asymV: 0 },
+  sin: { tex: '\\sin x^\\circ', btnTex: 'f(x) = \\sin x^\\circ', trig: true, anchor: [90, 1], f: x => Math.sin(x * Math.PI / 180) },
+  cos: { tex: '\\cos x^\\circ', btnTex: 'f(x) = \\cos x^\\circ', trig: true, anchor: [0, 1], f: x => Math.cos(x * Math.PI / 180) },
+  tan: { tex: '\\tan x^\\circ', btnTex: 'f(x) = \\tan x^\\circ', trig: true, anchor: [45, 1], f: x => {
+    const m = ((x % 180) + 180) % 180;
+    return Math.abs(m - 90) < 0.8 ? NaN : Math.tan(x * Math.PI / 180);
+  }}
+};
+
+/* ==================== LATEX MC ASSESSMENT BANK ==================== */
+const QUIZZES = {
+  1: [
+    {
+      q: "If the graph of $y = 3^x$ is translated to the left by $2$ units, the equation of the resulting graph is",
+      opts: ["$y = 3^{x - 2}$", "$y = 3^{x + 2}$", "$y = 3^x + 2$", "$y = 3^x - 2$"],
+      ans: 1,
+      exp: "Replacing $x$ with $(x + 2)$ translates the graph horizontally to the left by $2$ units, giving $y = 3^{x + 2}$."
+    },
+    {
+      q: "If the graph of $y = f(x)$ has $x$-intercepts $-2$ and $6$, find the $x$-intercepts of $y = f\\!\\left(\\dfrac{1}{2}x\\right)$.",
+      opts: ["$-1$ and $3$", "$-4$ and $12$", "$-2$ and $6$", "$0$ and $8$"],
+      ans: 1,
+      exp: "The transformation $y = f\\!\\left(\\dfrac{1}{2}x\\right)$ enlarges the graph to $2$ times the original along the $x$-axis, scaling the $x$-intercepts to $2(-2) = -4$ and $2(6) = 12$."
+    },
+    {
+      q: "Let $f(x) = (x - 1)^2 + 2$. Which of the following transformations changes the minimum value of the function?",
+      opts: ["$y = f(x + 5)$", "$y = f(-x)$", "$y = f(3x)$", "$y = f(x) - 4$"],
+      ans: 3,
+      exp: "Horizontal shifts, reflections across the $y$-axis, and horizontal scalings leave $y$-coordinates invariant. Only $y = f(x) - 4$ lowers the minimum value from $2$ to $-2$."
+    },
+    {
+      q: "If the graph of $y = \\cos x^\\circ$ is reduced to $\\dfrac{1}{3}$ of the original along the $x$-axis, state the new function and its period.",
+      opts: ["$y = \\cos 3x^\\circ,\\text{ period } 120^\\circ$", "$y = \\cos \\dfrac{x^\\circ}{3},\\text{ period } 1080^\\circ$", "$y = 3\\cos x^\\circ,\\text{ period } 360^\\circ$", "$y = \\dfrac{1}{3}\\cos x^\\circ,\\text{ period } 120^\\circ$"],
+      ans: 0,
+      exp: "Reducing to $\\dfrac{1}{3}$ along the $x$-axis yields $y = f(3x) = \\cos 3x^\\circ$, compressing the period to $\\dfrac{360^\\circ}{3} = 120^\\circ$."
+    },
+    {
+      q: "Which of the following accurately describes the geometric features of the graph of $y = -2^x$?",
+      opts: ["Increasing above the $x$-axis through $(0, 1)$", "Decreasing above the $x$-axis through $(0, 1)$", "Decreasing below the $x$-axis through $(0, -1)$", "Increasing below the $x$-axis through $(0, -1)$"],
+      ans: 2,
+      exp: "Since $y = -2^x$ reflects $y = 2^x$ with respect to the $x$-axis, the curve lies entirely below $y = 0$, passes through $(0, -1)$, and decreases as $x$ increases."
+    }
+  ],
+  2: [
+    {
+      q: "The graph of $y = g(x)$ is obtained by translating $y = f(x)$ upwards by $4$ units and then reflecting the resulting graph with respect to the $x$-axis. Then $g(x) =$",
+      opts: ["$-f(x) + 4$", "$-f(x) - 4$", "$f(-x) + 4$", "$f(-x) - 4$"],
+      ans: 1,
+      exp: "Translating upwards by $4$ units gives $y = f(x) + 4$. Reflecting the entire resulting function across the $x$-axis gives $g(x) = -(f(x) + 4) = -f(x) - 4$."
+    },
+    {
+      q: "Which sequence of transformations maps the graph of $y = f(x)$ onto $y = f(4 - 2x)$?",
+      opts: ["Reflect wrt $y$-axis, reduce to $\\dfrac{1}{2}$ along $x$-axis, translate right by $2$", "Reduce to $\\dfrac{1}{2}$ along $x$-axis, translate left by $4$", "Translate right by $4$, enlarge to $2$ times along $x$-axis", "Reflect wrt $x$-axis, reduce to $\\dfrac{1}{2}$ along $x$-axis, translate right by $2$"],
+      ans: 0,
+      exp: "Factorising the argument gives $f(-2(x - 2))$: reflect wrt the $y$-axis to obtain $f(-x)$, compress to $\\dfrac{1}{2}$ along the $x$-axis to obtain $f(-2x)$, and translate right by $2$ units."
+    },
+    {
+      q: "Let $f(x) = 15 - 4x^2$. Find the coordinates of the vertex of the graph of $g(x) = \\dfrac{1}{3}f(2 - 5x) + 6$.",
+      opts: ["$(0.4, 11)$", "$(2, 11)$", "$(0.4, 15)$", "$(-0.4, 11)$"],
+      ans: 0,
+      exp: "The vertex of $f(x)$ is $(0, 15)$. Rewriting $2 - 5x = -5(x - 0.4)$ maps $x = 0$ to $x = 0.4$, while the vertical operations map $y = 15$ to $\\dfrac{1}{3}(15) + 6 = 11$."
+    },
+    {
+      q: "Translating the exponential graph $y = 2^x$ to the left by $3$ units yields the exact same graph as",
+      opts: ["Translating upwards by $8$ units", "Enlarging to $8$ times the original along the $y$-axis", "Reducing to $\\dfrac{1}{8}$ of the original along the $x$-axis", "Enlarging to $3$ times the original along the $y$-axis"],
+      ans: 1,
+      exp: "By the laws of indices, $2^{x + 3} = 2^3 \\cdot 2^x = 8(2^x)$, which corresponds to a vertical enlargement to $8$ times the original along the $y$-axis."
+    },
+    {
+      q: "If the graph of $y = \\sin(2x^\\circ + 60^\\circ)$ is obtained by translating the graph of $y = \\sin 2x^\\circ$ horizontally, the translation is",
+      opts: ["To the left by $60^\\circ$", "To the right by $60^\\circ$", "To the left by $30^\\circ$", "To the right by $30^\\circ$"],
+      ans: 2,
+      exp: "Factorising the coefficient of $x$ gives $y = \\sin\\!\\left(2(x^\\circ + 30^\\circ)\\right)$, which is a horizontal translation of $y = \\sin 2x^\\circ$ to the left by $30^\\circ$."
+    }
+  ],
+  3: [
+    {
+      q: "The vertex of the quadratic graph $y = f(x)$ is $P(3, -5)$, and $Q$ is the vertex of $y = 2f(-x) + 1$. Find the centroid of $\\triangle OPQ$, where $O$ is the origin.",
+      opts: ["$\\left(0, -\\dfrac{14}{3}\\right)$", "$(0, -4)$", "$(-3, -9)$", "$(0, -5)$"],
+      ans: 0,
+      exp: "Reflecting $P(3, -5)$ across the $y$-axis and applying $2y + 1$ gives $Q(-3, -9)$. Thus $G = \\left(\\dfrac{0 + 3 - 3}{3}, \\dfrac{0 - 5 - 9}{3}\\right) = \\left(0, -\\dfrac{14}{3}\\right)$."
+    },
+    {
+      q: "Let $P(k, 4)$ ($k > 0$) be the vertex of $y = f(x)$ and $Q$ be the vertex of $y = f(2 - x)$. Find the $x$-coordinate of the circumcentre of $\\triangle OPQ$.",
+      opts: ["$k$", "$1$", "$0$", "$k - 1$"],
+      ans: 1,
+      exp: "Since $f(2 - x) = f(-(x - 2))$, the vertex $Q$ is $(2 - k, 4)$. Because $PQ$ is horizontal, its perpendicular bisector is the vertical line $x = \\dfrac{k + (2 - k)}{2} = 1$."
+    },
+    {
+      q: "Let $g(x) = x^2 + 12kx + 36k^2 + 8$ ($k \\neq 0$). Denote the vertices of $y = g(x)$ and $y = 2g(-x)$ by $A$ and $B$ respectively. Find the centroid of $\\triangle OAB$.",
+      opts: ["$(0, 8)$", "$(-2k, 8)$", "$(0, 16)$", "$(2k, 12)$"],
+      ans: 0,
+      exp: "Completing the square gives $g(x) = (x + 6k)^2 + 8$, so $A = (-6k, 8)$ and $B = (6k, 16)$. The centroid of $\\triangle OAB$ is $\\left(\\dfrac{0 - 6k + 6k}{3}, \\dfrac{0 + 8 + 16}{3}\\right) = (0, 8)$."
+    },
+    {
+      q: "Denote the vertices of $y = f(x)$ and $y = f(-x)$ by $P(3, 4)$ and $Q$ respectively. Find the coordinates of the incentre of $\\triangle OPQ$.",
+      opts: ["$\\left(0, \\dfrac{5}{2}\\right)$", "$\\left(0, \\dfrac{8}{3}\\right)$", "$(0, 2)$", "$(0, 3)$"],
+      ans: 0,
+      exp: "Here $Q = (-3, 4)$, so $OP = 5$, $OQ = 5$, and $PQ = 6$. By the incentre formula, $I = \\left(0, \\dfrac{5(4) + 5(4) + 6(0)}{5 + 5 + 6}\\right) = \\left(0, \\dfrac{40}{16}\\right) = \\left(0, \\dfrac{5}{2}\\right)$."
+    },
+    {
+      q: "Let $P(k, k^2 + 4)$ be the vertex of $y = g(x)$. Let $D$ and $E$ be the vertices of $y = g(x + 2)$ and $y = -g(x - 2)$ respectively. Find the midpoint of $DE$.",
+      opts: ["$(k, 0)$", "$(0, k^2 + 4)$", "$(k - 2, 0)$", "$(2, 0)$"],
+      ans: 0,
+      exp: "We have $D = (k - 2, k^2 + 4)$ and $E = (k + 2, -k^2 - 4)$. Their midpoint is $\\left(\\dfrac{(k - 2) + (k + 2)}{2}, \\dfrac{(k^2 + 4) + (-k^2 - 4)}{2}\\right) = (k, 0)$."
+    }
+  ]
+};
+
+function renderMixedText(str) {
+  return str.replace(/\$([^$]+)\$/g, (_, math) => tex(math, false));
+}
+
+/* ==================== INITIALIZATION & STATIC LATEXHYDRATION ==================== */
+const canvas = document.getElementById('graphCanvas');
+const ctx = canvas.getContext('2d');
+let animId = null;
+
+function initStaticLatex() {
+  document.querySelectorAll('.tex-inline').forEach(el => { el.innerHTML = tex(el.dataset.tex); });
+
+  // Base Function Grid
+  document.getElementById('fnGrid').innerHTML = Object.entries(FNS).map(([key, obj]) =>
+    `<button class="fn-btn ${state.fn === key ? 'active' : ''}" id="fnBtn_${key}" onclick="selectFn('${key}')">${tex(obj.btnTex)}</button>`
+  ).join('');
+
+  // Module 2 Labels & Presets
+  document.getElementById('lblM2a').innerHTML = `Vertical Factor ${tex('a')}`;
+  document.getElementById('lblM2b').innerHTML = `Horizontal Factor ${tex('b')}`;
+  document.getElementById('lblM2c').innerHTML = `Inner Constant ${tex('c')}`;
+  document.getElementById('lblM2d').innerHTML = `Vertical Shift ${tex('d')}`;
+
+  const presets = [
+    [1, 'f(4 - 2x)'], [2, '1 - 2f(x)'], [3, '2^{x+3} = 8\\cdot 2^x'], [4, '\\log_2(4x)']
+  ];
+  document.getElementById('m2Presets').innerHTML = presets.map(([id, t]) =>
+    `<button class="chip" onclick="loadM2Preset(${id})">${tex(t)}</button>`
+  ).join('');
+
+  // Module 3 Scenarios & Labels
+  document.getElementById('lblM3k').innerHTML = `Parameter ${tex('k > 0')}`;
+  document.getElementById('lblM3r').innerHTML = `Vertex ${tex('R(x_r, 0)')}`;
+  const scens = [
+    [1, '1.\\; f(x) = (x - 2k)^2 + k^2 + 2 \\;\\longrightarrow\\; g(x) = f(-x - 2)'],
+    [2, '2.\\; f(x) = -(x - k)^2 + 3 \\;\\longrightarrow\\; g(x) = -f(x - 2)'],
+    [3, '3.\\; f(x) = (x - 2k)^2 + 2 \\;\\longrightarrow\\; g(x) = 2f(-x) + 1']
+  ];
+  document.getElementById('m3ScenButtons').innerHTML = scens.map(([id, t]) =>
+    `<button class="fn-btn ${state.scen === id ? 'active' : ''}" id="scenBtn_${id}" style="text-align:left; padding:9px 12px;" onclick="selectM3Scen(${id})">${tex(t)}</button>`
+  ).join('');
+
+  // Guided Examples Content (Strictly aligned equal signs, no \rightarrow)
+  document.getElementById('ex1Prompt').innerHTML = renderMixedText(
+    "Let $f(x) = x^2 - 4kx + 5k^2 + 2$, where $k > 0$. Denote the vertices of $y = f(x)$ and $y = f(-x - 2)$ by $P$ and $Q$ respectively, and let $O$ be the origin. Prove that the orthocentre $H$ of $\\triangle OPQ$ lies on the $y$-axis for all $k > 0$."
+  );
+  document.getElementById('sol1').innerHTML =
+    renderMixedText("Completing the square for $f(x)$:") +
+    tex("\\begin{aligned} f(x) &= (x^2 - 4kx + 4k^2) - 4k^2 + 5k^2 + 2 \\\\ &= (x - 2k)^2 + k^2 + 2 \\end{aligned}", true) +
+    renderMixedText("Thus $P = (2k, k^2 + 2)$. Rewriting $f(-x - 2) = f(-(x + 2))$, reflecting across the $y$-axis and translating left by $2$ units gives $Q = (-2k - 2, k^2 + 2)$. Since $y_P = y_Q = k^2 + 2$, segment $PQ$ is horizontal. Consequently, the altitude from $O(0,0)$ perpendicular to $PQ$ is the vertical line $x = 0$ (the $y$-axis), on which $H$ must lie.");
+
+  document.getElementById('ex2Prompt').innerHTML = renderMixedText(
+    "Let $f(x) = -x^2 + 2kx - k^2 + 3$, where $k > 0$. Let $P$ and $Q$ be the vertices of $y = f(x)$ and $y = -f(x - 2)$ respectively. Find $k$ such that $OP \\perp OQ$, and state the circumcentre $C$ of $\\triangle OPQ$."
+  );
+  document.getElementById('sol2').innerHTML =
+    renderMixedText("Completing the square gives $f(x) = -(x - k)^2 + 3$, so $P = (k, 3)$ and $Q = (k + 2, -3)$. Since $OP \\perp OQ$:") +
+    tex("\\begin{aligned} m_{OP} \\times m_{OQ} &= -1 \\\\ \\dfrac{3}{k} \\times \\dfrac{-3}{k + 2} &= -1 \\\\ k^2 + 2k - 9 &= 0 \\\\ k &= \\sqrt{10} - 1 \\quad (\\text{since } k > 0) \\end{aligned}", true) +
+    renderMixedText("Because $\\angle POQ = 90^\\circ$, $PQ$ is a diameter of the circumcircle of $\\triangle OPQ$. Hence the circumcentre $C$ is the midpoint of $PQ$, which is $(k + 1, 0) = (\\sqrt{10}, 0)$.");
+}
+
+function setDefaultCam() {
+  const isTrig = state.tab !== 3 && FNS[state.fn].trig;
+  if (state.tab === 3) { state.cx = 0; state.cy = 3; state.scale = 38; }
+  else if (isTrig) { state.cx = 90; state.cy = 0; state.scale = 1.05; }
+  else if (state.fn === 'q3') { state.cx = 0; state.cy = 5; state.scale = 22; }
+  else { state.cx = 0; state.cy = 0; state.scale = 38; }
+}
+
+function switchTab(t) {
+  cancelAnim();
+  state.tab = t;
+  document.querySelectorAll('.nav-btn').forEach((b, i) => b.classList.toggle('active', i + 1 === t));
+  document.getElementById('baseFnSection').classList.toggle('hidden', t === 3);
+  document.getElementById('ctrlMod1').classList.toggle('hidden', t !== 1);
+  document.getElementById('ctrlMod2').classList.toggle('hidden', t !== 2);
+  document.getElementById('ctrlMod3').classList.toggle('hidden', t !== 3);
+  document.getElementById('m3Examples').classList.toggle('hidden', t !== 3);
+  setDefaultCam();
+  if (t === 1) renderInqControls();
+  if (t === 2) syncM2Ranges();
+  if (t === 3) buildLocus();
+  renderQuiz();
+  draw();
+}
+
+function selectFn(key) {
+  cancelAnim();
+  state.fn = key;
+  document.querySelectorAll('#fnGrid .fn-btn').forEach(b => b.classList.remove('active'));
+  const activeBtn = document.getElementById('fnBtn_' + key);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  const isTrig = FNS[key].trig;
+  if (state.inq === 2) state.m1h = isTrig ? -60 : -2;
+  if (isTrig && Math.abs(state.c) <= 6) state.c = 60;
+  if (!isTrig && Math.abs(state.c) > 10) state.c = 4;
+  setDefaultCam();
+  if (state.tab === 1) renderInqControls();
+  if (state.tab === 2) syncM2Ranges();
+  draw();
+}
+
+/* ==================== MODULE 1: INQUIRIES 1-5 ==================== */
+function setInquiry(n) {
+  cancelAnim();
+  state.inq = n; state.morph = 1;
+  document.getElementById('morphSlider').value = 1;
+  document.getElementById('morphLbl').textContent = '100%';
+  if (n === 2) state.m1h = FNS[state.fn].trig ? -60 : -2;
+  document.querySelectorAll('#inqChips .chip').forEach((c, i) => c.classList.toggle('active', i + 1 === n));
+  renderInqControls();
+  draw();
+}
+
+function renderInqControls() {
+  const area = document.getElementById('inqParamArea');
+  const key = document.getElementById('m1Key');
+  const err = document.getElementById('m1Err');
+  const isTrig = FNS[state.fn].trig;
+
+  if (state.inq === 1) {
+    area.innerHTML = `<div class="slider-row">
+      <div class="slider-head"><span>Vertical Shift Parameter ${tex('k')}</span><span class="val-readout" id="inqVal">${state.m1k > 0 ? '+'+state.m1k : state.m1k}</span></div>
+      <input type="range" min="-5" max="5" step="0.5" value="${state.m1k}" oninput="state.m1k=+this.value; document.getElementById('inqVal').textContent=(this.value>0?'+':'')+this.value; draw();">
+    </div>`;
+    key.innerHTML = `<span class="callout-title">Key Concept &mdash; Vertical Translation</span>` +
+      renderMixedText("Adding $k$ outside the function translates every point vertically: $(x, y)$ maps to $(x, y + k)$ in $y = f(x) + k$.");
+    err.innerHTML = `<span class="callout-title">Analytical Note</span>` +
+      renderMixedText("Domain and axis of symmetry remain invariant, whereas maximum/minimum values and horizontal asymptotes shift by $k$.");
+  } else if (state.inq === 2) {
+    const min = isTrig ? -180 : -5, max = isTrig ? 180 : 5, step = isTrig ? 15 : 0.5, unit = isTrig ? '°' : '';
+    area.innerHTML = `<div class="slider-row">
+      <div class="slider-head"><span>Inner Constant ${tex('c')} in ${tex('f(x + c)')}</span><span class="val-readout" id="inqVal">${state.m1h > 0 ? '+'+state.m1h : state.m1h}${unit}</span></div>
+      <input type="range" min="${min}" max="${max}" step="${step}" value="${state.m1h}" oninput="state.m1h=+this.value; document.getElementById('inqVal').textContent=(this.value>0?'+':'')+this.value+'${unit}'; draw();">
+    </div>`;
+    key.innerHTML = `<span class="callout-title">Key Concept &mdash; Horizontal Translation</span>` +
+      renderMixedText("For $k > 0$, $y = f(x - k)$ translates the graph to the **right** by $k$ units, while $y = f(x + k)$ translates it to the **left** by $k$ units.");
+    err.innerHTML = `<span class="callout-title">Common Error Alert</span>` +
+      renderMixedText("Observe the inverted sign inside the bracket: $f(x - 2)$ shifts the graph rightwards by $2$ units, not leftwards.");
+  } else if (state.inq === 3) {
+    area.innerHTML = `<span class="section-label">Axis of Reflection</span>
+      <div class="chip-grid">
+        <button class="chip ${state.m1Ref==='x'?'active':''}" onclick="state.m1Ref='x'; renderInqControls(); draw();">${tex('x')}-axis: ${tex('y = -f(x)')}</button>
+        <button class="chip ${state.m1Ref==='y'?'active':''}" onclick="state.m1Ref='y'; renderInqControls(); draw();">${tex('y')}-axis: ${tex('y = f(-x)')}</button>
+      </div>`;
+    key.innerHTML = `<span class="callout-title">Key Concept &mdash; Axis Reflections</span>` +
+      renderMixedText("$y = -f(x)$ negates all $y$-coordinates (reflection across the $x$-axis); $y = f(-x)$ negates all $x$-coordinates (reflection across the $y$-axis).");
+    err.innerHTML = `<span class="callout-title">Symmetry Observation</span>` +
+      renderMixedText("Even functions such as $x^2 - 4$ or $\\cos x^\\circ$ satisfy $f(-x) = f(x)$. Select $(x - 1)^2 - 4$ or $2^x$ to observe horizontal reflection clearly.");
+  } else if (state.inq === 4) {
+    const vals = [[0.25,'\\tfrac{1}{4}'], [0.5,'\\tfrac{1}{2}'], [1,'1'], [1.5,'\\tfrac{3}{2}'], [2,'2'], [3,'3']];
+    area.innerHTML = `<span class="section-label">Vertical Scale Factor ${tex('k')} in ${tex('y = kf(x)')}</span><div class="chip-grid">` +
+      vals.map(([v, t]) => `<button class="chip ${state.m1vy===v?'active':''}" onclick="state.m1vy=${v}; renderInqControls(); draw();">${tex('k = ' + t)}</button>`).join('') + `</div>`;
+    key.innerHTML = `<span class="callout-title">Key Concept &mdash; Vertical Scaling</span>` +
+      renderMixedText("For $k > 1$, $y = kf(x)$ enlarges the graph to $k$ times along the $y$-axis; for $0 < k < 1$, it reduces the graph to $k$ of the original along the $y$-axis.");
+    err.innerHTML = `<span class="callout-title">Intercept Invariance</span>` +
+      renderMixedText("Every $x$-intercept remains fixed under $y = kf(x)$ because $k \\times 0 = 0$, whereas the $y$-intercept is multiplied by $k$.");
+  } else {
+    const vals = [[0.5,'\\tfrac{1}{2}'], [1,'1'], [2,'2'], [3,'3'], [4,'4']];
+    area.innerHTML = `<span class="section-label">Horizontal Factor ${tex('k')} in ${tex('y = f(kx)')}</span><div class="chip-grid">` +
+      vals.map(([v, t]) => `<button class="chip ${state.m1hx===v?'active':''}" onclick="state.m1hx=${v}; renderInqControls(); draw();">${tex('k = ' + t)}</button>`).join('') + `</div>`;
+    key.innerHTML = `<span class="callout-title">Key Concept &mdash; Horizontal Scaling</span>` +
+      renderMixedText("$y = f(kx)$ multiplies every $x$-coordinate by $\\dfrac{1}{k}$ while keeping the $y$-intercept invariant.");
+    err.innerHTML = `<span class="callout-title">Common Error Alert</span>` +
+      renderMixedText("$y = f(2x)$ **reduces** (compresses) the graph to $\\dfrac{1}{2}$ of the original along the $x$-axis rather than enlarging it to $2$ times.");
+  }
+}
+
+function mapM1Point(x, y, t) {
+  if (state.inq === 1) return [x, y + t * state.m1k];
+  if (state.inq === 2) return [x - t * state.m1h, y];
+  if (state.inq === 3) return state.m1Ref === 'x' ? [x, y * (1 - 2*t)] : [x * (1 - 2*t), y];
+  if (state.inq === 4) return [x, y * (1 + t * (state.m1vy - 1))];
+  if (state.inq === 5) return [x * (1 + t * (1/state.m1hx - 1)), y];
+  return [x, y];
+}
+
+function onMorphInput(v) { cancelAnim(); state.morph = +v; document.getElementById('morphLbl').textContent = Math.round(v*100) + '%'; draw(); }
+function playMorph() {
+  cancelAnim(); state.morph = 0;
+  const start = performance.now(), dur = 1250;
+  function step(now) {
+    const p = Math.min(1, (now - start) / dur);
+    state.morph = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p + 2, 2)/2;
+    document.getElementById('morphSlider').value = state.morph;
+    document.getElementById('morphLbl').textContent = Math.round(state.morph*100) + '%';
+    draw();
+    if (p < 1) animId = requestAnimationFrame(step);
+  }
+  animId = requestAnimationFrame(step);
+}
+
+/* ==================== MODULE 2: COMBINED & DUAL PATHWAYS ==================== */
+function syncM2Ranges() {
+  const isTrig = FNS[state.fn].trig;
+  const cEl = document.getElementById('m2c');
+  cEl.min = isTrig ? -180 : -6; cEl.max = isTrig ? 180 : 6; cEl.step = isTrig ? 30 : 1;
+  cEl.value = state.c;
+  document.getElementById('m2a').value = state.a;
+  document.getElementById('m2b').value = state.b;
+  document.getElementById('m2d').value = state.d;
+  updateM2Text();
+}
+
+function updateM2() {
+  cancelAnim(); state.pathAnim = null;
+  let a = +document.getElementById('m2a').value; if (a === 0) a = 0.5;
+  let b = +document.getElementById('m2b').value; if (b === 0) b = 0.5;
+  state.a = a; state.b = b;
+  state.c = +document.getElementById('m2c').value;
+  state.d = +document.getElementById('m2d').value;
+  updateM2Text(); draw();
+}
+
+function loadM2Preset(id) {
+  cancelAnim(); state.pathAnim = null;
+  if (id === 1) { selectFn('q2'); state.a = 1; state.b = -2; state.c = 4; state.d = 0; }
+  if (id === 2) { selectFn('q1'); state.a = -2; state.b = 1; state.c = 0; state.d = 1; }
+  if (id === 3) { selectFn('exp'); state.a = 1; state.b = 1; state.c = 3; state.d = 0; }
+  if (id === 4) { selectFn('log'); state.a = 1; state.b = 4; state.c = 0; state.d = 0; }
+  syncM2Ranges(); draw();
+}
+
+function updateM2Text() {
+  const { a, b, c, d, fn } = state;
+  const deg = FNS[fn].trig ? '^\\circ' : '';
+  document.getElementById('m2aVal').textContent = a;
+  document.getElementById('m2bVal').textContent = b;
+  document.getElementById('m2cVal').textContent = (c > 0 ? '+' : '') + c + (FNS[fn].trig ? '°' : '');
+  document.getElementById('m2dVal').textContent = (d > 0 ? '+' : '') + d;
+
+  const cardA = document.getElementById('cardPathA');
+  const cardB = document.getElementById('cardPathB');
+
+  if (fn === 'exp' && a === 1 && b === 1 && c !== 0 && d === 0) {
+    const mult = +Math.pow(2, c).toFixed(3);
+    cardA.innerHTML = `<div class="pathway-head">Method A: Horizontal Translation</div>
+      <div class="step-item" id="stA1">1. Base function ${tex('y = 2^x')}</div>
+      <div class="step-item" id="stA2">2. Translate ${c>0?'left':'right'} by ${tex(Math.abs(c)+'')} units to obtain ${tex(`y = 2^{x ${c>0?'+':'-'} ${Math.abs(c)}}`)}</div>`;
+    cardB.innerHTML = `<div class="pathway-head">Method B: Index-Law Vertical Scaling</div>
+      <div class="step-item" id="stB1">1. Algebraic identity: ${tex(`2^{x ${c>0?'+':'-'} ${Math.abs(c)}} = 2^{${c}} \\cdot 2^x = ${mult}\\cdot 2^x`)}</div>
+      <div class="step-item" id="stB2">2. Scale vertically by factor ${tex(mult+'')} along the ${tex('y')}-axis</div>`;
+    return;
+  }
+  if (fn === 'log' && a === 1 && b > 0 && b !== 1 && c === 0 && d === 0) {
+    const sh = +Math.log2(b).toFixed(2);
+    cardA.innerHTML = `<div class="pathway-head">Method A: Horizontal Scaling</div>
+      <div class="step-item" id="stA1">1. Base function ${tex('y = \\log_2 x')}</div>
+      <div class="step-item" id="stA2">2. Scale ${tex('x')}-coordinates by ${tex(`\\tfrac{1}{${b}}`)} along the ${tex('x')}-axis</div>`;
+    cardB.innerHTML = `<div class="pathway-head">Method B: Log-Law Vertical Translation</div>
+      <div class="step-item" id="stB1">1. Algebraic identity: ${tex(`\\log_2(${b}x) = \\log_2 x + \\log_2 ${b}`)}</div>
+      <div class="step-item" id="stB2">2. Translate vertically by ${tex((sh>=0?'+':'')+sh)} units</div>`;
+    return;
+  }
+
+  const sh = +(c / b).toFixed(2);
+  const shSign = sh >= 0 ? `+ ${Math.abs(sh)}${deg}` : `- ${Math.abs(sh)}${deg}`;
+  const hDesc = b === 1 ? 'Keep $x$-scale' : `${b < 0 ? 'Reflect wrt $y$-axis' : ''}${b < 0 && Math.abs(b)!==1 ? ', ' : ''}${Math.abs(b)!==1 ? `scale $x$ by $\\tfrac{1}{${Math.abs(b)}}$` : ''}`;
+  const vDesc = a === 1 ? 'Keep $y$-scale' : `${a < 0 ? 'Reflect wrt $x$-axis' : ''}${a < 0 && Math.abs(a)!==1 ? ', ' : ''}${Math.abs(a)!==1 ? `scale $y$ by $${Math.abs(a)}$` : ''}`;
+
+  cardA.innerHTML = `<div class="pathway-head">Method A: Factorised (Scale/Reflect, then Shift)</div>
+    <div style="font-size:0.78rem; color:var(--ink-muted); margin-bottom:3px;">Factorised form: ${tex(`g(x) = ${a===1?'':a===-1?'-':a}f\\!\\left(${b}(x ${sh===0?'':shSign})\\right) ${d===0?'':(d>0?'+ '+d:'- '+Math.abs(d))}`)}</div>
+    <div class="step-item" id="stA1">1. ${renderMixedText(`${hDesc}; ${vDesc}.`)}</div>
+    <div class="step-item" id="stA2">2. ${renderMixedText(`Translate horizontally by $${-sh}${deg}$ and vertically by $${d}$.`)}</div>`;
+
+  cardB.innerHTML = `<div class="pathway-head">Method B: Unfactorised (Shift, then Scale/Reflect)</div>
+    <div style="font-size:0.78rem; color:var(--ink-muted); margin-bottom:3px;">Direct inner shift ${tex(`x \\mapsto x ${c>=0?'+ '+c:'- '+Math.abs(c)}${deg}`)} first</div>
+    <div class="step-item" id="stB1">1. ${renderMixedText(`Translate horizontally by $${-c}${deg}$ and vertically by $${+(d/a).toFixed(2)}$.`)}</div>
+    <div class="step-item" id="stB2">2. ${renderMixedText(`${hDesc}; ${vDesc} — identical locus.`)}</div>`;
+}
+
+function playPathway(which) {
+  cancelAnim(); state.pathAnim = which;
+  document.getElementById('cardPathA').classList.toggle('highlight', which === 'A');
+  document.getElementById('cardPathB').classList.toggle('highlight', which === 'B');
+  const start = performance.now(), dur = 2300;
+  function step(now) {
+    const p = Math.min(1, (now - start) / dur);
+    if (p < 0.5) { state.pathStage = 1; state.pathT = p * 2; setActiveStep(which, 1); }
+    else { state.pathStage = 2; state.pathT = (p - 0.5) * 2; setActiveStep(which, 2); }
+    draw();
+    if (p < 1) animId = requestAnimationFrame(step);
+    else { state.pathAnim = null; setActiveStep(null, 0); draw(); }
+  }
+  animId = requestAnimationFrame(step);
+}
+
+function setActiveStep(which, st) {
+  ['stA1','stA2','stB1','stB2'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.remove('active-step'); });
+  if (which && st) { const el = document.getElementById(`st${which}${st}`); if (el) el.classList.add('active-step'); }
+}
+
+/* ==================== MODULE 3: TRIANGLE CENTRES ==================== */
+function getM3Data(kVal, rVal) {
+  if (state.scen === 1) {
+    const py = kVal*kVal + 2;
+    return {
+      P: [2*kVal, py], Q: [-2*kVal - 2, py], R: [rVal, 0],
+      f: x => (x - 2*kVal)**2 + py,
+      g: x => (-x - 2 - 2*kVal)**2 + py,
+      fTex: `f(x) = (x - ${(2*kVal).toFixed(2)})^2 + ${py.toFixed(2)}`,
+      gTex: `g(x) = f(-x - 2)`
+    };
+  } else if (state.scen === 2) {
+    return {
+      P: [kVal, 3], Q: [kVal + 2, -3], R: [rVal, 0],
+      f: x => -((x - kVal)**2) + 3,
+      g: x => ((x - 2 - kVal)**2) - 3,
+      fTex: `f(x) = -(x - ${kVal.toFixed(2)})^2 + 3`,
+      gTex: `g(x) = -f(x - 2)`
+    };
+  } else {
+    return {
+      P: [2*kVal, 2], Q: [-2*kVal, 5], R: [rVal, 0],
+      f: x => (x - 2*kVal)**2 + 2,
+      g: x => 2*(((-x) - 2*kVal)**2 + 2) + 1,
+      fTex: `f(x) = (x - ${(2*kVal).toFixed(2)})^2 + 2`,
+      gTex: `g(x) = 2f(-x) + 1`
+    };
+  }
+}
+
+function calcCentres(A, B, C) {
+  const [x1, y1] = A, [x2, y2] = B, [x3, y3] = C;
+  const G = [(x1 + x2 + x3)/3, (y1 + y2 + y3)/3];
+  const a = Math.hypot(x2 - x3, y2 - y3), b = Math.hypot(x1 - x3, y1 - y3), c = Math.hypot(x1 - x2, y1 - y2);
+  const perim = a + b + c;
+  const I = perim > 1e-6 ? [(a*x1 + b*x2 + c*x3)/perim, (a*y1 + b*y2 + c*y3)/perim] : null;
+  const area2 = Math.abs((x2 - x1)*(y3 - y1) - (x3 - x1)*(y2 - y1));
+  const inR = perim > 1e-6 ? area2 / perim : 0;
+
+  const D = 2 * (x1*(y2 - y3) + x2*(y3 - y1) + x3*(y1 - y2));
+  if (Math.abs(D) < 1e-5) return { G, I, inR, C: null, H: null, circR: 0, collinear: true };
+  const s1 = x1*x1 + y1*y1, s2 = x2*x2 + y2*y2, s3 = x3*x3 + y3*y3;
+  const ux = (s1*(y2 - y3) + s2*(y3 - y1) + s3*(y1 - y2)) / D;
+  const uy = (s1*(x3 - x2) + s2*(x1 - x3) + s3*(x2 - x1)) / D;
+  const CC = [ux, uy];
+  const H = [x1 + x2 + x3 - 2*ux, y1 + y2 + y3 - 2*uy];
+  return { G, I, inR, C: CC, H, circR: Math.hypot(x1 - ux, y1 - uy), collinear: false };
+}
+
+function selectM3Scen(id) {
+  cancelAnim(); state.scen = id;
+  [1,2,3].forEach(n => document.getElementById('scenBtn_' + n).classList.toggle('active', n === id));
+  buildLocus(); draw();
+}
+function onM3Slider() {
+  state.k = +document.getElementById('m3k').value;
+  state.xr = +document.getElementById('m3r').value;
+  document.getElementById('m3kVal').textContent = state.k.toFixed(2);
+  document.getElementById('m3rVal').textContent = state.xr.toFixed(1);
+  buildLocus(); draw();
+}
+function setCentre(c) {
+  state.centre = c;
+  const order = ['H','C','G','I','ALL'];
+  document.querySelectorAll('#centreChips .chip').forEach((el, idx) => el.classList.toggle('active', order[idx] === c));
+  buildLocus(); draw();
+}
+function buildLocus() {
+  state.locus = [];
+  const key = state.centre === 'ALL' ? 'H' : state.centre;
+  for (let kv = 0.4; kv <= 2.601; kv += 0.04) {
+    const d = getM3Data(kv, state.xr);
+    const cs = calcCentres(d.R, d.P, d.Q);
+    if (cs[key]) state.locus.push(cs[key]);
+  }
+}
+function clearLocus() { document.getElementById('locusToggle').checked = false; draw(); }
+function toggleSweep() {
+  if (state.sweeping) { cancelAnim(); return; }
+  state.sweeping = true;
+  document.getElementById('sweepBtn').textContent = 'Pause Parameter Sweep';
+  function loop() {
+    state.k += 0.011 * state.sweepDir;
+    if (state.k >= 2.6) { state.k = 2.6; state.sweepDir = -1; }
+    if (state.k <= 0.4) { state.k = 0.4; state.sweepDir = 1; }
+    document.getElementById('m3k').value = state.k;
+    document.getElementById('m3kVal').textContent = state.k.toFixed(2);
+    draw();
+    animId = requestAnimationFrame(loop);
+  }
+  animId = requestAnimationFrame(loop);
+}
+function loadGuidedEx(n) {
+  cancelAnim();
+  if (n === 1) { state.k = 1.2; state.xr = 0; setCentre('H'); selectM3Scen(1); }
+  else { state.k = Math.sqrt(10) - 1; state.xr = 0; setCentre('C'); selectM3Scen(2); }
+  document.getElementById('m3k').value = state.k;
+  document.getElementById('m3r').value = state.xr;
+  document.getElementById('m3kVal').textContent = state.k.toFixed(2);
+  document.getElementById('m3rVal').textContent = state.xr.toFixed(1);
+  buildLocus(); draw();
+}
+function toggleSol(id) { document.getElementById(id).classList.toggle('open'); }
+function cancelAnim() {
+  if (animId) cancelAnimationFrame(animId);
+  animId = null; state.sweeping = false;
+  const sb = document.getElementById('sweepBtn');
+  if (sb) sb.textContent = 'Sweep Parameter k';
+}
+
+/* ==================== ARCHITECTURAL CANVAS RENDERER ==================== */
+function toScr(x, y, w, h, sx, sy) { return [w/2 + (x - state.cx)*sx, h/2 - (y - state.cy)*sy]; }
+function fromScr(px, py, w, h, sx, sy) { return [state.cx + (px - w/2)/sx, state.cy - (py - h/2)/sy]; }
+
+function draw() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  if (canvas.width !== Math.round(rect.width * dpr) || canvas.height !== Math.round(rect.height * dpr)) {
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+  }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const w = rect.width, h = rect.height;
+  ctx.clearRect(0, 0, w, h);
+
+  const isTrig = state.tab !== 3 && FNS[state.fn].trig;
+  const sx = state.scale, sy = isTrig ? state.scale * 90 : state.scale;
+
+  drawGridAndAxes(w, h, sx, sy, isTrig);
+  if (state.tab === 1) renderModule1Canvas(w, h, sx, sy, isTrig);
+  else if (state.tab === 2) renderModule2Canvas(w, h, sx, sy, isTrig);
+  else renderModule3Canvas(w, h, sx, sy);
+}
+
+function drawGridAndAxes(w, h, sx, sy, isTrig) {
+  const [xmin, ymax] = fromScr(0, 0, w, h, sx, sy);
+  const [xmax, ymin] = fromScr(w, h, w, h, sx, sy);
+
+  let xStep = isTrig ? 90 : 1;
+  if (!isTrig) {
+    while (xStep * sx < 36) xStep *= 2;
+    while (xStep * sx > 100 && xStep > 0.5) xStep /= 2;
+  } else {
+    if (90 * sx < 36) xStep = 180;
+    if (90 * sx > 135) xStep = 45;
+  }
+  let yStep = 1;
+  while (yStep * sy < 34) yStep *= 2;
+  while (yStep * sy > 95 && yStep > 0.5) yStep /= 2;
+
+  const [ox, oy] = toScr(0, 0, w, h, sx, sy);
+
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(15, 23, 42, 0.065)';
+  ctx.fillStyle = '#525b6c';
+  ctx.font = '12px "Times New Roman", Georgia, serif';
+
+  for (let x = Math.ceil(xmin / xStep) * xStep; x <= xmax; x += xStep) {
+    const [px] = toScr(x, 0, w, h, sx, sy);
+    ctx.beginPath(); ctx.moveTo(px, 0); ctx.lineTo(px, h); ctx.stroke();
+    if (Math.abs(x) > 1e-6) {
+      const lbl = isTrig ? `${Math.round(x)}°` : +x.toFixed(2);
+      ctx.fillText(lbl, px - 9, Math.min(h - 8, Math.max(18, oy + 16)));
+    }
+  }
+  for (let y = Math.ceil(ymin / yStep) * yStep; y <= ymax; y += yStep) {
+    const [, py] = toScr(0, y, w, h, sx, sy);
+    ctx.beginPath(); ctx.moveTo(0, py); ctx.lineTo(w, py); ctx.stroke();
+    if (Math.abs(y) > 1e-6) {
+      ctx.fillText(+y.toFixed(2), Math.min(w - 28, Math.max(8, ox + 7)), py + 4);
+    }
+  }
+
+  // Primary Coordinate Axes with Classical Serif Italic Labels
+  ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(0, oy); ctx.lineTo(w, oy); ctx.moveTo(ox, 0); ctx.lineTo(ox, h); ctx.stroke();
+
+  ctx.font = 'italic 15px "Times New Roman", Georgia, serif';
+  ctx.fillStyle = '#0f172a';
+  ctx.fillText('x', w - 16, Math.min(h - 10, Math.max(16, oy - 8)));
+  ctx.fillText('y', Math.min(w - 18, Math.max(10, ox + 10)), 18);
+  ctx.fillText('O', ox - 15, oy + 16);
+}
+
+function plotFunc(evalFn, color, dashed, width, w, h, sx, sy) {
+  ctx.save();
+  ctx.strokeStyle = color; ctx.lineWidth = width;
+  if (dashed) ctx.setLineDash(dashed);
+  ctx.beginPath();
+  let pen = false, prevY = 0;
+  for (let px = 0; px <= w; px += 2) {
+    const [x] = fromScr(px, 0, w, h, sx, sy);
+    const y = evalFn(x);
+    if (!Number.isFinite(y)) { pen = false; continue; }
+    const [, py] = toScr(x, y, w, h, sx, sy);
+    if (pen && Math.abs(py - prevY) > h * 0.82) pen = false;
+    if (!pen) { ctx.moveTo(px, py); pen = true; } else ctx.lineTo(px, py);
+    prevY = py;
+  }
+  ctx.stroke(); ctx.restore();
+}
+
+function drawVector(x1, y1, x2, y2, color) {
+  const dx = x2 - x1, dy = y2 - y1;
+  if (Math.hypot(dx, dy) < 4) return;
+  ctx.save();
+  ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 1.6;
+  ctx.setLineDash([4, 3]);
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  ctx.setLineDash([]);
+  const ang = Math.atan2(dy, dx);
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - 7.5*Math.cos(ang - 0.4), y2 - 7.5*Math.sin(ang - 0.4));
+  ctx.lineTo(x2 - 7.5*Math.cos(ang + 0.4), y2 - 7.5*Math.sin(ang + 0.4));
+  ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+
+function drawPoint(x, y, color, label, w, h, sx, sy) {
+  const [px, py] = toScr(x, y, w, h, sx, sy);
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath(); ctx.arc(px, py, 4.5, 0, Math.PI*2); ctx.fill();
+  ctx.strokeStyle = color; ctx.lineWidth = 2.2; ctx.stroke();
+  if (label) {
+    ctx.font = 'italic 600 13px "Times New Roman", Georgia, serif';
+    ctx.fillStyle = color;
+    ctx.fillText(label, px + 8, py - 8);
+  }
+}
+
+function renderModule1Canvas(w, h, sx, sy, isTrig) {
+  const fnObj = FNS[state.fn];
+  plotFunc(fnObj.f, 'rgba(20, 40, 75, 0.55)', [6, 4], 1.8, w, h, sx, sy);
+
+  const t = state.morph;
+  ctx.save();
+  ctx.strokeStyle = '#8b1e3f'; ctx.lineWidth = 2.6;
+  ctx.beginPath();
+  let pen = false, prevPy = 0;
+  const [xmin] = fromScr(0, 0, w, h, sx, sy), [xmax] = fromScr(w, 0, w, h, sx, sy);
+  const span = xmax - xmin, pad = span * 1.6, steps = 440;
+  for (let i = 0; i <= steps; i++) {
+    const x0 = (xmin - pad) + (span + 2*pad) * (i / steps);
+    const y0 = fnObj.f(x0);
+    if (!Number.isFinite(y0)) { pen = false; continue; }
+    const [mx, my] = mapM1Point(x0, y0, t);
+    const [px, py] = toScr(mx, my, w, h, sx, sy);
+    if (pen && Math.abs(py - prevPy) > h * 0.82) pen = false;
+    if (!pen) { ctx.moveTo(px, py); pen = true; } else ctx.lineTo(px, py);
+    prevPy = py;
+  }
+  ctx.stroke(); ctx.restore();
+
+  if (document.getElementById('vecToggle').checked) {
+    const samples = isTrig ? [-90, 0, 90, 180, 270] : (state.fn === 'log' ? [0.5, 1, 2, 4] : [-2, -1, 0, 1, 2]);
+    samples.forEach(xs => {
+      const ys = fnObj.f(xs);
+      if (!Number.isFinite(ys)) return;
+      const [nx, ny] = mapM1Point(xs, ys, t);
+      drawVector(...toScr(xs, ys, w, h, sx, sy), ...toScr(nx, ny, w, h, sx, sy), '#9a7b3e');
+    });
+  }
+
+  const [ax, ay] = fnObj.anchor;
+  const [bx, by] = mapM1Point(ax, ay, t);
+  const u = isTrig ? '°' : '';
+  drawPoint(ax, ay, '#14284b', `P(${ax}${u}, ${+ay.toFixed(2)})`, w, h, sx, sy);
+  drawPoint(bx, by, '#8b1e3f', `P'(${+bx.toFixed(2)}${u}, ${+by.toFixed(2)})`, w, h, sx, sy);
+
+  const degTex = isTrig ? '^\\circ' : '';
+  let gTex = '';
+  if (state.inq === 1) gTex = `g(x) = f(x) ${state.m1k>=0?'+ '+state.m1k:'- '+Math.abs(state.m1k)}`;
+  if (state.inq === 2) gTex = `g(x) = f(x ${state.m1h>=0?'+ '+state.m1h:'- '+Math.abs(state.m1h)}${degTex})`;
+  if (state.inq === 3) gTex = state.m1Ref === 'x' ? `g(x) = -f(x)` : `g(x) = f(-x)`;
+  if (state.inq === 4) gTex = `g(x) = ${state.m1vy === 0.25 ? '\\tfrac{1}{4}' : state.m1vy === 0.5 ? '\\tfrac{1}{2}' : state.m1vy === 1.5 ? '\\tfrac{3}{2}' : state.m1vy}f(x)`;
+  if (state.inq === 5) gTex = `g(x) = f(${state.m1hx === 0.5 ? '\\tfrac{1}{2}' : state.m1hx}x)`;
+
+  document.getElementById('hudBadges').innerHTML = `
+    <div class="eq-card">${tex(`y = f(x) = ${fnObj.tex}`)}</div>
+    <div class="eq-card crimson">${tex(`y = ${gTex}`)}</div>`;
+}
+
+function renderModule2Canvas(w, h, sx, sy, isTrig) {
+  const fnObj = FNS[state.fn];
+  const { a, b, c, d } = state;
+  plotFunc(fnObj.f, 'rgba(20, 40, 75, 0.45)', [6, 4], 1.8, w, h, sx, sy);
+
+  if (document.getElementById('ghostToggle').checked) {
+    const ghostFn = state.pathAnim === 'B' ? (x => fnObj.f(x + c) + d/a) : (x => a * fnObj.f(b * x));
+    plotFunc(ghostFn, 'rgba(154, 123, 62, 0.65)', [3, 4], 1.8, w, h, sx, sy);
+  }
+
+  let activeFn = x => a * fnObj.f(b * x + c) + d;
+  if (state.pathAnim === 'A') {
+    const t = state.pathT, sh = c / b;
+    activeFn = state.pathStage === 1
+      ? (x => (1 + t*(a - 1)) * fnObj.f((1 + t*(b - 1)) * x))
+      : (x => a * fnObj.f(b * (x + t*sh)) + t*d);
+  } else if (state.pathAnim === 'B') {
+    const t = state.pathT;
+    activeFn = state.pathStage === 1
+      ? (x => fnObj.f(x + t*c) + t*(d/a))
+      : (x => (1 + t*(a - 1)) * (fnObj.f((1 + t*(b - 1))*x + c) + d/a));
+  }
+
+  plotFunc(activeFn, '#8b1e3f', null, 2.6, w, h, sx, sy);
+
+  const [ax, ay] = fnObj.anchor;
+  const gx = (ax - c) / b, gy = a * ay + d;
+  const u = isTrig ? '°' : '';
+  drawPoint(ax, ay, '#14284b', `P(${ax}${u}, ${ay})`, w, h, sx, sy);
+  drawPoint(gx, gy, '#8b1e3f', `P'(${+gx.toFixed(2)}${u}, ${+gy.toFixed(2)})`, w, h, sx, sy);
+
+  const degTex = isTrig ? '^\\circ' : '';
+  const cStr = c === 0 ? '' : (c > 0 ? ` + ${c}${degTex}` : ` - ${Math.abs(c)}${degTex}`);
+  const dStr = d === 0 ? '' : (d > 0 ? ` + ${d}` : ` - ${Math.abs(d)}`);
+  const aStr = a === 1 ? '' : a === -1 ? '-' : a;
+  const bStr = b === 1 ? '' : b === -1 ? '-' : b;
+
+  document.getElementById('hudBadges').innerHTML = `
+    <div class="eq-card">${tex(`f(x) = ${fnObj.tex}`)}</div>
+    <div class="eq-card crimson">${tex(`g(x) = ${aStr}f(${bStr}x${cStr})${dStr}`)}</div>
+    <div class="eq-card gold">Gold Dotted Curve: Intermediate Transformation Stage</div>`;
+}
+
+function renderModule3Canvas(w, h, sx, sy) {
+  const d = getM3Data(state.k, state.xr);
+  plotFunc(d.f, 'rgba(20, 40, 75, 0.5)', [6, 4], 1.8, w, h, sx, sy);
+  plotFunc(d.g, 'rgba(139, 30, 63, 0.5)', [6, 4], 1.8, w, h, sx, sy);
+
+  const [rx, ry] = toScr(...d.R, w, h, sx, sy);
+  const [px, py] = toScr(...d.P, w, h, sx, sy);
+  const [qx, qy] = toScr(...d.Q, w, h, sx, sy);
+
+  ctx.fillStyle = 'rgba(20, 40, 75, 0.06)';
+  ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(rx, ry); ctx.lineTo(px, py); ctx.lineTo(qx, qy); ctx.closePath();
+  ctx.fill(); ctx.stroke();
+
+  if (document.getElementById('locusToggle').checked && state.locus.length > 1) {
+    ctx.save();
+    ctx.strokeStyle = '#9a7b3e'; ctx.lineWidth = 2; ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    state.locus.forEach((pt, idx) => {
+      const [lx, ly] = toScr(pt[0], pt[1], w, h, sx, sy);
+      if (idx === 0) ctx.moveTo(lx, ly); else ctx.lineTo(lx, ly);
+    });
+    ctx.stroke(); ctx.restore();
+  }
+
+  const cs = calcCentres(d.R, d.P, d.Q);
+  const mode = state.centre;
+
+  if (!cs.collinear) {
+    if (mode === 'C' || mode === 'ALL') {
+      const [ccx, ccy] = toScr(...cs.C, w, h, sx, sy);
+      ctx.save(); ctx.strokeStyle = 'rgba(20, 83, 45, 0.45)'; ctx.lineWidth = 1.4; ctx.setLineDash([5, 4]);
+      ctx.beginPath(); ctx.arc(ccx, ccy, cs.circR * sx, 0, Math.PI*2); ctx.stroke(); ctx.restore();
+      drawPoint(cs.C[0], cs.C[1], '#14532d', `C(${cs.C[0].toFixed(2)}, ${cs.C[1].toFixed(2)})`, w, h, sx, sy);
+    }
+    if (mode === 'I' || mode === 'ALL') {
+      const [icx, icy] = toScr(...cs.I, w, h, sx, sy);
+      ctx.save(); ctx.strokeStyle = 'rgba(154, 123, 62, 0.6)'; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.arc(icx, icy, cs.inR * sx, 0, Math.PI*2); ctx.stroke(); ctx.restore();
+      drawPoint(cs.I[0], cs.I[1], '#9a7b3e', `I(${cs.I[0].toFixed(2)}, ${cs.I[1].toFixed(2)})`, w, h, sx, sy);
+    }
+    if (mode === 'G' || mode === 'ALL') {
+      if (mode === 'G') {
+        [[d.R, d.P, d.Q], [d.P, d.Q, d.R], [d.Q, d.R, d.P]].forEach(([V, M1, M2]) => {
+          const [vx, vy] = toScr(...V, w, h, sx, sy);
+          const [mx, my] = toScr((M1[0]+M2[0])/2, (M1[1]+M2[1])/2, w, h, sx, sy);
+          ctx.save(); ctx.strokeStyle = 'rgba(20,40,75,0.35)'; ctx.setLineDash([4,3]);
+          ctx.beginPath(); ctx.moveTo(vx, vy); ctx.lineTo(mx, my); ctx.stroke(); ctx.restore();
+        });
+      }
+      drawPoint(cs.G[0], cs.G[1], '#14284b', `G(${cs.G[0].toFixed(2)}, ${cs.G[1].toFixed(2)})`, w, h, sx, sy);
+    }
+    if (mode === 'H' || mode === 'ALL') {
+      if (mode === 'H') {
+        const [hx, hy] = toScr(...cs.H, w, h, sx, sy);
+        [[rx, ry], [px, py], [qx, qy]].forEach(([vx, vy]) => {
+          ctx.save(); ctx.strokeStyle = 'rgba(139,30,63,0.38)'; ctx.setLineDash([4,3]);
+          ctx.beginPath(); ctx.moveTo(vx, vy); ctx.lineTo(hx, hy); ctx.stroke(); ctx.restore();
+        });
+      }
+      drawPoint(cs.H[0], cs.H[1], '#8b1e3f', `H(${cs.H[0].toFixed(2)}, ${cs.H[1].toFixed(2)})`, w, h, sx, sy);
+    }
+    if (mode === 'ALL') {
+      const [hx, hy] = toScr(...cs.H, w, h, sx, sy), [ccx, ccy] = toScr(...cs.C, w, h, sx, sy);
+      ctx.save(); ctx.strokeStyle = '#8b1e3f'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(ccx, ccy); ctx.stroke(); ctx.restore();
+    }
+  }
+
+  drawPoint(d.R[0], d.R[1], '#0f172a', `R(${d.R[0]}, 0)`, w, h, sx, sy);
+  drawPoint(d.P[0], d.P[1], '#14284b', `P(${d.P[0].toFixed(2)}, ${d.P[1].toFixed(2)})`, w, h, sx, sy);
+  drawPoint(d.Q[0], d.Q[1], '#8b1e3f', `Q(${d.Q[0].toFixed(2)}, ${d.Q[1].toFixed(2)})`, w, h, sx, sy);
+
+  document.getElementById('hudBadges').innerHTML = `
+    <div class="eq-card">${tex(d.fTex)}</div>
+    <div class="eq-card crimson">${tex(d.gTex)}</div>`;
+
+  document.getElementById('m3Readout').innerHTML = cs.collinear
+    ? `<span class="callout-title">Degenerate Configuration</span>Vertices are collinear.`
+    : `<span class="callout-title">Analytical Centre Coordinates</span>` +
+      tex(`\\begin{aligned} H &= (${cs.H[0].toFixed(2)},\\; ${cs.H[1].toFixed(2)}), & C &= (${cs.C[0].toFixed(2)},\\; ${cs.C[1].toFixed(2)}) \\\\ G &= (${cs.G[0].toFixed(2)},\\; ${cs.G[1].toFixed(2)}), & I &= (${cs.I[0].toFixed(2)},\\; ${cs.I[1].toFixed(2)}) \\end{aligned}`, true);
+}
+
+/* ==================== INTERACTION & QUIZ ENGINE ==================== */
+let dragging = false, lastX = 0, lastY = 0;
+canvas.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
+canvas.addEventListener('pointermove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const isTrig = state.tab !== 3 && FNS[state.fn].trig;
+  const sx = state.scale, sy = isTrig ? state.scale * 90 : state.scale;
+  const [mx, my] = fromScr(e.clientX - rect.left, e.clientY - rect.top, rect.width, rect.height, sx, sy);
+  document.getElementById('cursorPill').textContent = `Coordinates: (${mx.toFixed(2)}${isTrig?'°':''}, ${my.toFixed(2)})`;
+  if (!dragging) return;
+  state.cx -= (e.clientX - lastX) / sx;
+  state.cy += (e.clientY - lastY) / sy;
+  lastX = e.clientX; lastY = e.clientY;
+  draw();
+});
+canvas.addEventListener('pointerup', () => dragging = false);
+canvas.addEventListener('dblclick', resetCam);
+canvas.addEventListener('wheel', e => { e.preventDefault(); zoomBy(e.deltaY < 0 ? 1.12 : 0.89); }, { passive: false });
+
+function zoomBy(f) { state.scale = Math.max(0.35, Math.min(180, state.scale * f)); draw(); }
+function resetCam() { setDefaultCam(); draw(); }
+window.addEventListener('resize', draw);
+
+function renderQuiz() {
+  const t = state.tab;
+  const titles = {
+    1: 'Part I Consolidation: Single Graph Transformations',
+    2: 'Part II Consolidation: Combined Transformations & Algebraic Equivalences',
+    3: 'Part III Challenge: Triangle Centres under Graph Transformations'
+  };
+  document.getElementById('quizHeading').textContent = titles[t];
+  const list = QUIZZES[t], ansMap = state.quizAns[t];
+  let score = 0;
+
+  document.getElementById('quizContainer').innerHTML = list.map((item, qi) => {
+    const picked = ansMap[qi], answered = picked !== undefined;
+    if (answered && picked === item.ans) score++;
+    return `<div class="q-card">
+      <div class="q-num">Question 0${qi + 1}</div>
+      <div class="q-stem">${renderMixedText(item.q)}</div>
+      <div class="opt-list">
+        ${item.opts.map((opt, oi) => {
+          let cls = 'opt-btn';
+          if (answered) {
+            if (oi === item.ans) cls += ' correct';
+            else if (oi === picked) cls += ' wrong';
+          }
+          return `<button class="${cls}" ${answered?'disabled':''} onclick="pickAns(${qi}, ${oi})">
+            <span class="opt-letter">${String.fromCharCode(65+oi)}.</span>
+            <span>${renderMixedText(opt)}</span>
+          </button>`;
+        }).join('')}
+      </div>
+      <div class="q-exp ${answered?'show':''}"><strong>Solution:</strong> ${renderMixedText(item.exp)}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('scoreBadge').textContent = `Score: ${score} / ${list.length}`;
+}
+
+function pickAns(qi, oi) { state.quizAns[state.tab][qi] = oi; renderQuiz(); }
+function resetQuiz() { state.quizAns[state.tab] = {}; renderQuiz(); }
+
+window.addEventListener('DOMContentLoaded', () => {
+  initStaticLatex();
+  switchTab(1);
+});
+</script>
+</body>
+</html>
